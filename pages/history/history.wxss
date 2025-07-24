@@ -1,0 +1,331 @@
+/* pages/history/history.wxss */
+.page {
+  background-color: #f5f5f5;
+}
+
+/* 筛选标签 */
+.filter-tabs {
+  display: flex;
+  background: white;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #1976D2;
+  color: white;
+  font-weight: bold;
+}
+
+/* 预约记录列表 */
+.booking-list {
+  padding: 20rpx;
+}
+
+.booking-card {
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: #f8f9fa;
+  border-bottom: 1rpx solid #eee;
+}
+
+.booking-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  background: #E8F5E8;
+  color: #4CAF50;
+}
+
+.status-paid {
+  background: #E3F2FD;
+  color: #1976D2;
+}
+
+.status-completed {
+  background: #F3E5F5;
+  color: #9C27B0;
+}
+
+.status-cancelled {
+  background: #FFEBEE;
+  color: #f44336;
+}
+
+.booking-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.card-content {
+  padding: 30rpx;
+}
+
+.court-info {
+  margin-bottom: 30rpx;
+}
+
+.court-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.court-type {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.booking-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.detail-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.detail-value.price {
+  color: #1976D2;
+}
+
+.card-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+  background: #f8f9fa;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 20rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 40rpx;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 40rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #999;
+  margin-bottom: 60rpx;
+}
+
+.empty-btn {
+  padding: 24rpx 60rpx;
+  font-size: 32rpx;
+  border-radius: 16rpx;
+}
+
+/* 详情弹窗 */
+.detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40rpx;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  background: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40rpx;
+  border-bottom: 1rpx solid #eee;
+  background: #f8f9fa;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #999;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-content {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 40rpx;
+}
+
+.detail-section {
+  margin-bottom: 40rpx;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #1976D2;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item.total {
+  padding-top: 24rpx;
+  margin-top: 16rpx;
+  border-top: 2rpx solid #eee;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+  text-align: right;
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.info-value.discount {
+  color: #4CAF50;
+}
+
+.info-value.price {
+  color: #1976D2;
+  font-size: 32rpx;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .filter-tabs {
+    padding: 15rpx;
+  }
+  
+  .tab-item {
+    font-size: 26rpx;
+    padding: 16rpx 0;
+  }
+  
+  .booking-card {
+    margin-bottom: 16rpx;
+  }
+  
+  .card-header,
+  .card-content,
+  .card-actions {
+    padding: 24rpx;
+  }
+  
+  .court-name {
+    font-size: 32rpx;
+  }
+  
+  .detail-row {
+    gap: 12rpx;
+  }
+  
+  .detail-label,
+  .detail-value {
+    font-size: 26rpx;
+  }
+  
+  .action-btn {
+    font-size: 26rpx;
+    padding: 18rpx;
+  }
+}

@@ -1,0 +1,154 @@
+<!--pages/booking/booking.wxml-->
+<view class="page">
+  <!-- 日期选择 -->
+  <view class="date-selector card">
+    <view class="section-title">选择日期</view>
+    <scroll-view class="date-scroll" scroll-x="true">
+      <view class="date-list">
+        <view 
+          class="date-item {{selectedDate === item.date ? 'active' : ''}}"
+          wx:for="{{dateList}}" 
+          wx:key="date"
+          bindtap="selectDate"
+          data-date="{{item.date}}"
+        >
+          <text class="date-day">{{item.day}}</text>
+          <text class="date-text">{{item.text}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 场地选择 -->
+  <view class="court-selector card">
+    <view class="section-title">选择场地</view>
+    <view class="court-grid">
+      <view 
+        class="court-card {{selectedCourt === item.id ? 'active' : ''}} {{item.status !== 'available' ? 'disabled' : ''}}"
+        wx:for="{{courts}}" 
+        wx:key="id"
+        bindtap="selectCourt"
+        data-id="{{item.id}}"
+      >
+        <view class="court-header">
+          <text class="court-name">{{item.name}}</text>
+          <view class="court-status-badge status-{{item.status}}">
+            {{item.status === 'available' ? '空闲' : item.status === 'occupied' ? '使用中' : '维护中'}}
+          </view>
+        </view>
+        <text class="court-type">{{item.type}}</text>
+        <text class="court-price">¥{{item.price}}/小时</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 时间段选择 -->
+  <view class="time-selector card" wx:if="{{selectedCourt}}">
+    <view class="section-title">选择时间段</view>
+    <view class="time-grid">
+      <view 
+        class="time-slot {{selectedTimeSlot === item.time ? 'active' : ''}} {{item.available ? '' : 'disabled'}}"
+        wx:for="{{timeSlots}}" 
+        wx:key="time"
+        bindtap="selectTimeSlot"
+        data-time="{{item.time}}"
+      >
+        <text class="time-text">{{item.time}}</text>
+        <text class="time-status">{{item.available ? '可预约' : '已预约'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 时长选择 -->
+  <view class="duration-selector card" wx:if="{{selectedTimeSlot}}">
+    <view class="section-title">选择时长</view>
+    <view class="duration-list">
+      <view 
+        class="duration-item {{selectedDuration === item ? 'active' : ''}}"
+        wx:for="{{durationOptions}}" 
+        wx:key="*this"
+        bindtap="selectDuration"
+        data-duration="{{item}}"
+      >
+        <text class="duration-text">{{item}}小时</text>
+        <text class="duration-price">¥{{courtPrice * item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约信息确认 -->
+  <view class="booking-summary card" wx:if="{{selectedDuration}}">
+    <view class="section-title">预约信息</view>
+    <view class="summary-item">
+      <text class="summary-label">场地：</text>
+      <text class="summary-value">{{selectedCourtName}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">日期：</text>
+      <text class="summary-value">{{selectedDateText}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">时间：</text>
+      <text class="summary-value">{{selectedTimeSlot}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">时长：</text>
+      <text class="summary-value">{{selectedDuration}}小时</text>
+    </view>
+    <view class="summary-item total">
+      <text class="summary-label">总价：</text>
+      <text class="summary-value price">¥{{totalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="user-info card" wx:if="{{selectedDuration}}">
+    <view class="section-title">联系信息</view>
+    <view class="form-item">
+      <text class="form-label">姓名</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入您的姓名" 
+        value="{{userName}}"
+        bindinput="onNameInput"
+      />
+    </view>
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入手机号" 
+        type="number"
+        value="{{userPhone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+    <view class="form-item">
+      <text class="form-label">备注</text>
+      <textarea 
+        class="form-textarea" 
+        placeholder="请输入备注信息（选填）" 
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-section" wx:if="{{selectedDuration}}">
+    <button 
+      class="submit-btn btn-primary" 
+      bindtap="submitBooking"
+      disabled="{{!canSubmit}}"
+    >
+      确认预约 ¥{{totalPrice}}
+    </button>
+  </view>
+</view>
+
+<!-- 加载提示 -->
+<view class="loading-mask" wx:if="{{loading}}">
+  <view class="loading-content">
+    <text>正在提交预约...</text>
+  </view>
+</view>

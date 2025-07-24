@@ -1,0 +1,24 @@
+{
+  "description": "项目私有配置文件",
+  "projectname": "24%E5%B0%8F%E6%97%B6%E6%97%A0%E4%BA%BA%E7%BD%91%E7%90%83%E9%A6%86",
+  "setting": {
+    "compileHotReLoad": true,
+    "urlCheck": false,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "skylineRenderEnable": false,
+    "preloadBackgroundData": false,
+    "autoAudits": false,
+    "useApiHook": false,
+    "useApiHostProcess": false,
+    "showShadowRootInWxmlPanel": false,
+    "useStaticServer": false,
+    "useLanDebug": false,
+    "showES6CompileOption": false,
+    "checkInvalidKey": true,
+    "ignoreDevUnusedFiles": true,
+    "bigPackageSizeSupport": false,
+    "useIsolateContext": false
+  },
+  "libVersion": "3.8.11"
+}

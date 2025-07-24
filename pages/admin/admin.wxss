@@ -1,0 +1,336 @@
+/* pages/admin/admin.wxss */
+.page {
+  background-color: #f5f5f5;
+}
+
+/* 管理员验证 */
+.auth-section {
+  margin: 40rpx 20rpx;
+  text-align: center;
+}
+
+.auth-form {
+  padding: 40rpx 0;
+}
+
+.form-item {
+  margin-bottom: 40rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+  text-align: left;
+}
+
+.form-input {
+  width: 100%;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #1976D2;
+  background: white;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 32rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 16rpx;
+  margin-top: 20rpx;
+}
+
+/* 统计概览 */
+.stats-overview {
+  margin: 20rpx;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 20rpx;
+  background: linear-gradient(135deg, #1976D2, #42A5F5);
+  border-radius: 16rpx;
+  color: white;
+}
+
+.stat-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+/* 场地管理 */
+.court-management {
+  margin: 20rpx;
+}
+
+.court-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.court-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  border-left: 6rpx solid #1976D2;
+}
+
+.court-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.court-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.court-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  align-self: flex-start;
+}
+
+.court-actions {
+  margin-left: 20rpx;
+}
+
+.action-btn {
+  padding: 16rpx 24rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  border: none;
+}
+
+/* 预约管理 */
+.booking-management {
+  margin: 20rpx;
+}
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.refresh-btn {
+  padding: 12rpx 24rpx;
+  background: #1976D2;
+  color: white;
+  border: none;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.booking-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  gap: 20rpx;
+}
+
+.booking-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.booking-court {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.booking-time {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.booking-user {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.booking-status {
+  margin-right: 20rpx;
+}
+
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  background: #E8F5E8;
+  color: #4CAF50;
+}
+
+.status-paid {
+  background: #E3F2FD;
+  color: #1976D2;
+}
+
+.status-completed {
+  background: #F3E5F5;
+  color: #9C27B0;
+}
+
+.status-cancelled {
+  background: #FFEBEE;
+  color: #f44336;
+}
+
+.status-available {
+  background: #E8F5E8;
+  color: #4CAF50;
+}
+
+.status-occupied {
+  background: #FFEBEE;
+  color: #f44336;
+}
+
+.status-maintenance {
+  background: #FFF3E0;
+  color: #FF9800;
+}
+
+.booking-actions {
+  flex-shrink: 0;
+}
+
+/* 系统设置 */
+.system-settings {
+  margin: 20rpx;
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: all 0.3s;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item:active {
+  background: #f8f9fa;
+}
+
+.setting-icon {
+  font-size: 40rpx;
+  margin-right: 30rpx;
+  width: 60rpx;
+  text-align: center;
+}
+
+.setting-text {
+  flex: 1;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.setting-arrow {
+  font-size: 32rpx;
+  color: #999;
+}
+
+/* 通用样式 */
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16rpx;
+  }
+  
+  .stat-card {
+    padding: 30rpx 20rpx;
+  }
+  
+  .stat-number {
+    font-size: 40rpx;
+  }
+  
+  .booking-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16rpx;
+  }
+  
+  .booking-status,
+  .booking-actions {
+    align-self: flex-end;
+  }
+  
+  .court-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20rpx;
+  }
+  
+  .court-actions {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+}

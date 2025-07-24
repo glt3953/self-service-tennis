@@ -1,0 +1,427 @@
+/* pages/court/court.wxss */
+.page {
+  background-color: #f5f5f5;
+  padding-bottom: 120rpx;
+}
+
+/* 场地列表 */
+.court-list {
+  padding: 20rpx;
+}
+
+.court-card {
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.1);
+}
+
+.court-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: #f8f9fa;
+  border-bottom: 1rpx solid #eee;
+}
+
+.court-basic-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.court-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.court-type {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.court-status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.status-available {
+  background: #E8F5E8;
+  color: #4CAF50;
+}
+
+.status-occupied {
+  background: #FFEBEE;
+  color: #f44336;
+}
+
+.status-maintenance {
+  background: #FFF3E0;
+  color: #FF9800;
+}
+
+.court-content {
+  display: flex;
+  padding: 30rpx;
+  gap: 30rpx;
+}
+
+.court-image {
+  width: 200rpx;
+  height: 150rpx;
+  position: relative;
+  border-radius: 12rpx;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.court-img {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.court-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+}
+
+.detail-label {
+  font-size: 26rpx;
+  color: #666;
+  width: 120rpx;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: bold;
+  flex: 1;
+}
+
+.detail-value.price {
+  color: #1976D2;
+  font-size: 28rpx;
+}
+
+.status-text-available {
+  color: #4CAF50;
+}
+
+.status-text-occupied {
+  color: #f44336;
+}
+
+.status-text-maintenance {
+  color: #FF9800;
+}
+
+/* 场地特色 */
+.court-features {
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+  background: #f8f9fa;
+}
+
+.feature-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.feature-tag {
+  padding: 8rpx 16rpx;
+  background: #E3F2FD;
+  color: #1976D2;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+/* 操作按钮 */
+.court-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 24rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+  border: none;
+}
+
+.action-btn[disabled] {
+  background-color: #ccc !important;
+  color: #999 !important;
+}
+
+/* 刷新按钮 */
+.refresh-section {
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.refresh-btn {
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  border-radius: 50rpx;
+  border: none;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.2);
+}
+
+/* 详情弹窗 */
+.detail-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40rpx;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 700rpx;
+  max-height: 85vh;
+  background: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40rpx;
+  border-bottom: 1rpx solid #eee;
+  background: #f8f9fa;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #999;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* 场地图片轮播 */
+.detail-images {
+  height: 400rpx;
+}
+
+.image-swiper {
+  height: 100%;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+}
+
+/* 详情内容 */
+.detail-section {
+  padding: 40rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #1976D2;
+}
+
+/* 信息网格 */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30rpx;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.info-label {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+}
+
+.info-value.price {
+  color: #1976D2;
+  font-size: 32rpx;
+}
+
+/* 设施列表 */
+.facility-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.facility-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+}
+
+.facility-icon {
+  color: #4CAF50;
+  font-weight: bold;
+  margin-right: 20rpx;
+  font-size: 24rpx;
+}
+
+.facility-text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 规则列表 */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.rule-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  padding: 16rpx 20rpx;
+  background: #f8f9fa;
+  border-radius: 8rpx;
+}
+
+/* 弹窗操作按钮 */
+.modal-actions {
+  padding: 40rpx;
+  border-top: 1rpx solid #eee;
+  background: #f8f9fa;
+}
+
+.modal-btn {
+  width: 100%;
+  padding: 32rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 16rpx;
+  border: none;
+}
+
+.modal-btn[disabled] {
+  background-color: #ccc !important;
+  color: #999 !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 750rpx) {
+  .court-content {
+    flex-direction: column;
+    gap: 20rpx;
+  }
+  
+  .court-image {
+    width: 100%;
+    height: 200rpx;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 20rpx;
+  }
+  
+  .court-actions {
+    flex-direction: column;
+    gap: 16rpx;
+  }
+  
+  .action-btn {
+    padding: 20rpx;
+    font-size: 26rpx;
+  }
+}

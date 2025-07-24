@@ -1,0 +1,134 @@
+<!--pages/admin/admin.wxml-->
+<view class="page">
+  <!-- 管理员验证 -->
+  <view class="auth-section card" wx:if="{{!isAdmin}}">
+    <view class="section-title">管理员登录</view>
+    <view class="auth-form">
+      <view class="form-item">
+        <text class="form-label">管理员密码</text>
+        <input 
+          class="form-input" 
+          type="password"
+          placeholder="请输入管理员密码" 
+          value="{{adminPassword}}"
+          bindinput="onPasswordInput"
+        />
+      </view>
+      <button class="auth-btn btn-primary" bindtap="adminLogin">登录</button>
+    </view>
+  </view>
+
+  <!-- 管理员面板 -->
+  <view wx:if="{{isAdmin}}">
+    <!-- 统计概览 -->
+    <view class="stats-overview card">
+      <view class="section-title">今日统计</view>
+      <view class="stats-grid">
+        <view class="stat-card">
+          <text class="stat-number">{{todayStats.bookings}}</text>
+          <text class="stat-label">今日预约</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{todayStats.revenue}}</text>
+          <text class="stat-label">今日收入(¥)</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{todayStats.usage}}</text>
+          <text class="stat-label">使用率(%)</text>
+        </view>
+        <view class="stat-card">
+          <text class="stat-number">{{todayStats.users}}</text>
+          <text class="stat-label">活跃用户</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 场地管理 -->
+    <view class="court-management card">
+      <view class="section-title">场地管理</view>
+      <view class="court-list">
+        <view 
+          class="court-item"
+          wx:for="{{courts}}" 
+          wx:key="id"
+        >
+          <view class="court-info">
+            <text class="court-name">{{item.name}}</text>
+            <text class="court-status status-{{item.status}}">{{getStatusText(item.status)}}</text>
+          </view>
+          <view class="court-actions">
+            <button 
+              class="action-btn btn-secondary"
+              bindtap="toggleCourtStatus"
+              data-id="{{item.id}}"
+              data-status="{{item.status}}"
+            >
+              {{item.status === 'maintenance' ? '恢复使用' : '设为维护'}}
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 预约管理 -->
+    <view class="booking-management card">
+      <view class="section-title">
+        <text>预约管理</text>
+        <button class="refresh-btn" bindtap="refreshBookings">刷新</button>
+      </view>
+      <view class="booking-list">
+        <view 
+          class="booking-item"
+          wx:for="{{recentBookings}}" 
+          wx:key="id"
+        >
+          <view class="booking-info">
+            <text class="booking-court">{{item.courtName}}</text>
+            <text class="booking-time">{{formatTime(item.createTime)}}</text>
+            <text class="booking-user">{{item.userInfo.name}} - {{item.userInfo.phone}}</text>
+          </view>
+          <view class="booking-status">
+            <text class="status-badge status-{{item.status}}">{{getBookingStatusText(item.status)}}</text>
+          </view>
+          <view class="booking-actions">
+            <button 
+              class="action-btn btn-danger"
+              bindtap="cancelBooking"
+              data-id="{{item.id}}"
+              wx:if="{{item.status === 'confirmed' || item.status === 'paid'}}"
+            >
+              取消
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 系统设置 -->
+    <view class="system-settings card">
+      <view class="section-title">系统设置</view>
+      <view class="settings-list">
+        <view class="setting-item" bindtap="exportData">
+          <view class="setting-icon">📊</view>
+          <text class="setting-text">导出数据</text>
+          <text class="setting-arrow">></text>
+        </view>
+        <view class="setting-item" bindtap="clearCache">
+          <view class="setting-icon">🗑️</view>
+          <text class="setting-text">清理缓存</text>
+          <text class="setting-arrow">></text>
+        </view>
+        <view class="setting-item" bindtap="systemMaintenance">
+          <view class="setting-icon">⚙️</view>
+          <text class="setting-text">系统维护</text>
+          <text class="setting-arrow">></text>
+        </view>
+        <view class="setting-item" bindtap="adminLogout">
+          <view class="setting-icon">🚪</view>
+          <text class="setting-text">退出管理</text>
+          <text class="setting-arrow">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

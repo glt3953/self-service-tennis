@@ -1,0 +1,225 @@
+<!--pages/history/history.wxml-->
+<view class="page">
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view 
+      class="tab-item {{activeTab === 'all' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="all"
+    >
+      全部
+    </view>
+    <view 
+      class="tab-item {{activeTab === 'confirmed' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="confirmed"
+    >
+      已确认
+    </view>
+    <view 
+      class="tab-item {{activeTab === 'completed' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="completed"
+    >
+      已完成
+    </view>
+    <view 
+      class="tab-item {{activeTab === 'cancelled' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="cancelled"
+    >
+      已取消
+    </view>
+  </view>
+
+  <!-- 预约记录列表 -->
+  <view class="booking-list" wx:if="{{filteredBookings.length > 0}}">
+    <view 
+      class="booking-card"
+      wx:for="{{filteredBookings}}" 
+      wx:key="id"
+    >
+      <view class="card-header">
+        <view class="booking-status status-{{item.status}}">
+          {{getStatusText(item.status)}}
+        </view>
+        <text class="booking-time">{{formatTime(item.createTime)}}</text>
+      </view>
+      
+      <view class="card-content">
+        <view class="court-info">
+          <text class="court-name">{{item.courtName}}</text>
+          <text class="court-type">标准场地</text>
+        </view>
+        
+        <view class="booking-details">
+          <view class="detail-row">
+            <text class="detail-label">日期：</text>
+            <text class="detail-value">{{formatDate(item.date)}}</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">时间：</text>
+            <text class="detail-value">{{item.timeSlot}}</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">时长：</text>
+            <text class="detail-value">{{item.duration}}小时</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">费用：</text>
+            <text class="detail-value price">¥{{item.finalPrice || item.totalPrice}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="card-actions">
+        <!-- 已确认状态的操作 -->
+        <block wx:if="{{item.status === 'confirmed' || item.status === 'paid'}}">
+          <button 
+            class="action-btn btn-secondary" 
+            bindtap="cancelBooking"
+            data-id="{{item.id}}"
+          >
+            取消预约
+          </button>
+          <button 
+            class="action-btn btn-primary" 
+            bindtap="viewDetails"
+            data-booking="{{item}}"
+          >
+            查看详情
+          </button>
+        </block>
+        
+        <!-- 已完成状态的操作 -->
+        <block wx:if="{{item.status === 'completed'}}">
+          <button 
+            class="action-btn btn-secondary" 
+            bindtap="rateBooking"
+            data-id="{{item.id}}"
+          >
+            评价
+          </button>
+          <button 
+            class="action-btn btn-primary" 
+            bindtap="rebookSame"
+            data-booking="{{item}}"
+          >
+            再次预约
+          </button>
+        </block>
+        
+        <!-- 已取消状态的操作 -->
+        <block wx:if="{{item.status === 'cancelled'}}">
+          <button 
+            class="action-btn btn-primary" 
+            bindtap="rebookSame"
+            data-booking="{{item}}"
+          >
+            重新预约
+          </button>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{filteredBookings.length === 0}}">
+    <view class="empty-icon">📋</view>
+    <text class="empty-text">暂无{{getTabText(activeTab)}}记录</text>
+    <button 
+      class="empty-btn btn-primary" 
+      bindtap="goToBooking"
+    >
+      立即预约
+    </button>
+  </view>
+</view>
+
+<!-- 预约详情弹窗 -->
+<view class="detail-modal" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">预约详情</text>
+      <text class="modal-close" bindtap="closeDetailModal">×</text>
+    </view>
+    
+    <view class="detail-content" wx:if="{{selectedBooking}}">
+      <view class="detail-section">
+        <text class="section-title">场地信息</text>
+        <view class="info-item">
+          <text class="info-label">场地名称：</text>
+          <text class="info-value">{{selectedBooking.courtName}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">场地类型：</text>
+          <text class="info-value">标准场地</text>
+        </view>
+      </view>
+      
+      <view class="detail-section">
+        <text class="section-title">预约信息</text>
+        <view class="info-item">
+          <text class="info-label">预约日期：</text>
+          <text class="info-value">{{formatDate(selectedBooking.date)}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">使用时间：</text>
+          <text class="info-value">{{selectedBooking.timeSlot}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">使用时长：</text>
+          <text class="info-value">{{selectedBooking.duration}}小时</text>
+        </view>
+      </view>
+      
+      <view class="detail-section">
+        <text class="section-title">费用信息</text>
+        <view class="info-item">
+          <text class="info-label">场地费用：</text>
+          <text class="info-value">¥{{selectedBooking.totalPrice}}</text>
+        </view>
+        <view class="info-item" wx:if="{{selectedBooking.coupon}}">
+          <text class="info-label">优惠券：</text>
+          <text class="info-value discount">-¥{{selectedBooking.coupon.discount}}</text>
+        </view>
+        <view class="info-item total">
+          <text class="info-label">实付金额：</text>
+          <text class="info-value price">¥{{selectedBooking.finalPrice || selectedBooking.totalPrice}}</text>
+        </view>
+      </view>
+      
+      <view class="detail-section">
+        <text class="section-title">联系信息</text>
+        <view class="info-item">
+          <text class="info-label">联系人：</text>
+          <text class="info-value">{{selectedBooking.userInfo.name}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">手机号：</text>
+          <text class="info-value">{{selectedBooking.userInfo.phone}}</text>
+        </view>
+        <view class="info-item" wx:if="{{selectedBooking.userInfo.remark}}">
+          <text class="info-label">备注：</text>
+          <text class="info-value">{{selectedBooking.userInfo.remark}}</text>
+        </view>
+      </view>
+      
+      <view class="detail-section">
+        <text class="section-title">订单信息</text>
+        <view class="info-item">
+          <text class="info-label">订单号：</text>
+          <text class="info-value">{{selectedBooking.id}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">创建时间：</text>
+          <text class="info-value">{{formatTime(selectedBooking.createTime)}}</text>
+        </view>
+        <view class="info-item" wx:if="{{selectedBooking.paymentTime}}">
+          <text class="info-label">支付时间：</text>
+          <text class="info-value">{{formatTime(selectedBooking.paymentTime)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

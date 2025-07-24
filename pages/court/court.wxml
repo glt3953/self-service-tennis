@@ -1,0 +1,164 @@
+<!--pages/court/court.wxml-->
+<view class="page">
+  <!-- 场地列表 -->
+  <view class="court-list">
+    <view 
+      class="court-card"
+      wx:for="{{courts}}" 
+      wx:key="id"
+    >
+      <view class="court-header">
+        <view class="court-basic-info">
+          <text class="court-name">{{item.name}}</text>
+          <text class="court-type">{{item.type}}</text>
+        </view>
+        <view class="court-status-badge status-{{item.status}}">
+          {{getStatusText(item.status)}}
+        </view>
+      </view>
+      
+      <view class="court-content">
+        <view class="court-image">
+          <image 
+            class="court-img" 
+            src="/images/court-{{item.id}}.jpg" 
+            mode="aspectFill"
+            lazy-load
+          />
+          <view class="image-overlay" wx:if="{{item.status !== 'available'}}">
+            <text class="overlay-text">{{getStatusText(item.status)}}</text>
+          </view>
+        </view>
+        
+        <view class="court-details">
+          <view class="detail-row">
+            <text class="detail-label">价格：</text>
+            <text class="detail-value price">¥{{item.price}}/小时</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">类型：</text>
+            <text class="detail-value">{{item.type}}</text>
+          </view>
+          <view class="detail-row">
+            <text class="detail-label">状态：</text>
+            <text class="detail-value status-text-{{item.status}}">{{getStatusText(item.status)}}</text>
+          </view>
+          <view class="detail-row" wx:if="{{item.currentUser}}">
+            <text class="detail-label">使用者：</text>
+            <text class="detail-value">{{item.currentUser}}</text>
+          </view>
+          <view class="detail-row" wx:if="{{item.endTime}}">
+            <text class="detail-label">结束时间：</text>
+            <text class="detail-value">{{item.endTime}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="court-features">
+        <view class="feature-title">场地特色</view>
+        <view class="feature-tags">
+          <text class="feature-tag" wx:for="{{item.features}}" wx:key="*this">{{item}}</text>
+        </view>
+      </view>
+      
+      <view class="court-actions">
+        <button 
+          class="action-btn btn-secondary" 
+          bindtap="viewCourtDetail"
+          data-court="{{item}}"
+        >
+          查看详情
+        </button>
+        <button 
+          class="action-btn btn-primary" 
+          bindtap="bookCourt"
+          data-court="{{item}}"
+          disabled="{{item.status !== 'available'}}"
+        >
+          {{item.status === 'available' ? '立即预约' : '暂不可约'}}
+        </button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 刷新按钮 -->
+  <view class="refresh-section">
+    <button class="refresh-btn btn-secondary" bindtap="refreshCourts">
+      🔄 刷新状态
+    </button>
+  </view>
+</view>
+
+<!-- 场地详情弹窗 -->
+<view class="detail-modal" wx:if="{{showDetailModal}}" bindtap="closeDetailModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">{{selectedCourt.name}}</text>
+      <text class="modal-close" bindtap="closeDetailModal">×</text>
+    </view>
+    
+    <view class="detail-content" wx:if="{{selectedCourt}}">
+      <!-- 场地图片 -->
+      <view class="detail-images">
+        <swiper class="image-swiper" indicator-dots="true" autoplay="true">
+          <swiper-item wx:for="{{selectedCourt.images}}" wx:key="*this">
+            <image class="swiper-image" src="{{item}}" mode="aspectFill" />
+          </swiper-item>
+        </swiper>
+      </view>
+      
+      <!-- 基本信息 -->
+      <view class="detail-section">
+        <text class="section-title">基本信息</text>
+        <view class="info-grid">
+          <view class="info-item">
+            <text class="info-label">场地类型</text>
+            <text class="info-value">{{selectedCourt.type}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">价格</text>
+            <text class="info-value price">¥{{selectedCourt.price}}/小时</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">面积</text>
+            <text class="info-value">{{selectedCourt.area}}平方米</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">地面材质</text>
+            <text class="info-value">{{selectedCourt.surface}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 设施设备 -->
+      <view class="detail-section">
+        <text class="section-title">设施设备</text>
+        <view class="facility-list">
+          <view class="facility-item" wx:for="{{selectedCourt.facilities}}" wx:key="*this">
+            <text class="facility-icon">✓</text>
+            <text class="facility-text">{{item}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 使用规则 -->
+      <view class="detail-section">
+        <text class="section-title">使用规则</text>
+        <view class="rules-list">
+          <text class="rule-item" wx:for="{{selectedCourt.rules}}" wx:key="*this">{{index + 1}}. {{item}}</text>
+        </view>
+      </view>
+      
+      <!-- 预约按钮 -->
+      <view class="modal-actions">
+        <button 
+          class="modal-btn btn-primary" 
+          bindtap="bookSelectedCourt"
+          disabled="{{selectedCourt.status !== 'available'}}"
+        >
+          {{selectedCourt.status === 'available' ? '立即预约' : '暂不可约'}}
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,20 @@
+{
+  "path": "/Users/ningxia/CodeBuddy/20250723t175217",
+  "desc": "这是一个24小时无人网球馆管理系统的微信小程序项目，包含完整的预约、支付、管理功能。项目包含用户端6个页面和管理后台，具备场地预约、在线支付、优惠券系统、预约管理、个人中心等功能。",
+  "id": "3aa76d1036c64950953398c5061455bd",
+  "data": {
+    "spaceKey": "3aa76d1036c64950953398c5061455bd",
+    "connections": {
+      "webIDE": "https://3aa76d1036c64950953398c5061455bd.ap-singapore.cloudstudio.club",
+      "preview": "https://3aa76d1036c64950953398c5061455bd--{port}.ap-singapore.cloudstudio.club",
+      "api": "https://3aa76d1036c64950953398c5061455bd--api.ap-singapore.cloudstudio.club",
+      "pty": "https://3aa76d1036c64950953398c5061455bd--pty.ap-singapore.cloudstudio.club"
+    }
+  },
+  "config": {
+    "api": "https://3aa76d1036c64950953398c5061455bd--api.ap-singapore.cloudstudio.club",
+    "pty": "https://3aa76d1036c64950953398c5061455bd--pty.ap-singapore.cloudstudio.club",
+    "region": "ap-shanghai",
+    "spaceKey": "3aa76d1036c64950953398c5061455bd"
+  }
+}

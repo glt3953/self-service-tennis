@@ -1,0 +1,179 @@
+<!--pages/profile/profile.wxml-->
+<view class="page">
+  <!-- 用户信息头部 -->
+  <view class="user-header">
+    <view class="user-avatar" bindtap="getUserInfo">
+      <image 
+        class="avatar-img" 
+        src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" 
+        mode="aspectFill"
+      />
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{userInfo.nickName || '点击登录'}}</text>
+      <text class="user-phone" wx:if="{{userPhone}}">{{userPhone}}</text>
+      <text class="login-tip" wx:else bindtap="getUserInfo">点击获取用户信息</text>
+    </view>
+    <view class="user-level">
+      <text class="level-text">VIP会员</text>
+    </view>
+  </view>
+
+  <!-- 会员卡片 -->
+  <view class="member-card card">
+    <view class="card-bg">
+      <view class="card-content">
+        <view class="card-title">会员余额</view>
+        <view class="balance-amount">¥{{userBalance}}</view>
+        <view class="card-actions">
+          <button class="card-btn" bindtap="recharge">充值</button>
+          <button class="card-btn" bindtap="withdraw">提现</button>
+        </view>
+      </view>
+      <view class="card-decoration">💳</view>
+    </view>
+  </view>
+
+  <!-- 统计信息 -->
+  <view class="stats-section card">
+    <view class="section-title">我的统计</view>
+    <view class="stats-grid">
+      <view class="stat-item" bindtap="goToHistory">
+        <text class="stat-number">{{totalBookings}}</text>
+        <text class="stat-label">总预约</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{completedBookings}}</text>
+        <text class="stat-label">已完成</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{totalHours}}</text>
+        <text class="stat-label">总时长(h)</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{totalSpent}}</text>
+        <text class="stat-label">总消费(¥)</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section card">
+    <view class="section-title">功能菜单</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goToHistory">
+        <view class="menu-icon">📋</view>
+        <text class="menu-text">预约记录</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showCoupons">
+        <view class="menu-icon">🎫</view>
+        <text class="menu-text">我的优惠券</text>
+        <view class="menu-badge" wx:if="{{availableCoupons > 0}}">{{availableCoupons}}</view>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showRechargeHistory">
+        <view class="menu-icon">💰</view>
+        <text class="menu-text">充值记录</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showSettings">
+        <view class="menu-icon">⚙️</view>
+        <text class="menu-text">设置</text>
+        <text class="menu-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 服务菜单 -->
+  <view class="service-section card">
+    <view class="section-title">客户服务</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="contactService">
+        <view class="menu-icon">📞</view>
+        <text class="menu-text">联系客服</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showFeedback">
+        <view class="menu-icon">💬</view>
+        <text class="menu-text">意见反馈</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showAbout">
+        <view class="menu-icon">ℹ️</view>
+        <text class="menu-text">关于我们</text>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item" bindtap="showHelp">
+        <view class="menu-icon">❓</view>
+        <text class="menu-text">帮助中心</text>
+        <text class="menu-arrow">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">版本号：v1.0.0</text>
+  </view>
+</view>
+
+<!-- 优惠券弹窗 -->
+<view class="coupon-modal" wx:if="{{showCouponModal}}" bindtap="closeCouponModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">我的优惠券</text>
+      <text class="modal-close" bindtap="closeCouponModal">×</text>
+    </view>
+    <view class="coupon-tabs">
+      <view 
+        class="coupon-tab {{couponTab === 'available' ? 'active' : ''}}"
+        bindtap="switchCouponTab"
+        data-tab="available"
+      >
+        可使用({{userCoupons.available.length}})
+      </view>
+      <view 
+        class="coupon-tab {{couponTab === 'used' ? 'active' : ''}}"
+        bindtap="switchCouponTab"
+        data-tab="used"
+      >
+        已使用({{userCoupons.used.length}})
+      </view>
+      <view 
+        class="coupon-tab {{couponTab === 'expired' ? 'active' : ''}}"
+        bindtap="switchCouponTab"
+        data-tab="expired"
+      >
+        已过期({{userCoupons.expired.length}})
+      </view>
+    </view>
+    <view class="coupon-list">
+      <view 
+        class="coupon-card {{item.status}}"
+        wx:for="{{currentCoupons}}" 
+        wx:key="id"
+      >
+        <view class="coupon-left">
+          <text class="coupon-amount">¥{{item.discount}}</text>
+          <text class="coupon-condition">满{{item.minAmount}}可用</text>
+        </view>
+        <view class="coupon-right">
+          <text class="coupon-name">{{item.name}}</text>
+          <text class="coupon-expire">有效期至{{item.expireDate}}</text>
+          <button 
+            class="use-coupon-btn" 
+            wx:if="{{item.status === 'available'}}"
+            bindtap="useCoupon"
+            data-coupon="{{item}}"
+          >
+            立即使用
+          </button>
+        </view>
+      </view>
+      <view class="empty-coupon" wx:if="{{currentCoupons.length === 0}}">
+        <text>暂无{{getCouponTabText(couponTab)}}优惠券</text>
+      </view>
+    </view>
+  </view>
+</view>
